@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eBay Calculator - Final Fee & Profit Estimator</title>
+  <meta name="description" content="Use eBayCalculator.site to quickly calculate eBay fees, PayPal fees, and profits. The trusted eBay fee calculator for sellers.">
+  <meta name="keywords" content="eBay calculator, eBay fee calculator, final value fee calculator, PayPal fees, seller profit">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #f4f7fb; margin: 0; padding: 0; color:#333; display:flex; flex-direction:column; min-height:100vh;}
+    header { background: linear-gradient(135deg,#0f172a,#1e293b); color: #fff; text-align: center; padding: 20px; display:flex; align-items:center; justify-content:center; gap:15px;}
+    header img { height:60px; width:auto; border-radius:50%; }
+    header h1 { margin:0; font-size:1.8rem; font-weight:700; }
+    header p { margin-top:5px; opacity:0.9; font-size:0.9rem; }
+    main { flex:1; padding: 30px 20px; max-width: 1000px; margin: auto; }
+    #calculator { background:#fff; padding:30px; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+    #calculator h2 { font-size:1.5rem; margin-bottom:20px; text-align:center; }
+    form { display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
+    label { font-weight:600; font-size:0.9rem;}
+    input, select { padding:10px; border-radius:8px; border:1px solid #ccc; width:100%; }
+    button { grid-column: span 2; padding:15px; background:linear-gradient(135deg,#2563eb,#1e40af); border:none; border-radius:12px; color:#fff; font-size:1rem; font-weight:600; cursor:pointer; transition:0.3s; }
+    button:hover { background:linear-gradient(135deg,#1d4ed8,#1e3a8a); }
+    #results { margin-top:30px; text-align:center; }
+    #results h3 { margin-bottom:15px; }
+    #chartContainer { margin-top:20px; display:flex; justify-content:center; }
+    canvas { max-width:280px !important; height:auto !important; }
+    .article-box { background:#f9fafb; border-left:5px solid #2563eb; padding:20px; border-radius:8px; margin-top:30px; }
+    .article-box h2 { margin-top:0; color:#1e293b; }
+    ul { margin:10px 0; padding-left:20px; }
+    footer { background:#1e293b; color:#fff; text-align:center; padding:20px; margin-top:30px; }
+    footer a { color:#93c5fd; margin:0 10px; text-decoration:none; font-weight:600; }
+    footer a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Clac Logo">
+    <div>
+      <h1>eBay Calculator</h1>
+      <p>Estimate your final fees, costs, and profit instantly</p>
+    </div>
+  </header>
+
+  <main>
+    <section id="calculator">
+      <h2>Final Fee & Profit Estimator</h2>
+      <form id="calcForm">
+        <div>
+          <label for="salePrice">Sale Price ($)</label>
+          <input type="number" id="salePrice" required step="0.01">
+        </div>
+        <div>
+          <label for="cost">Item Cost ($)</label>
+          <input type="number" id="cost" required step="0.01">
+        </div>
+        <div>
+          <label for="shipping">Shipping Cost ($)</label>
+          <input type="number" id="shipping" value="0" step="0.01">
+        </div>
+        <div>
+          <label for="sellerLevel">Seller Level</label>
+          <select id="sellerLevel">
+            <option value="12.9">Top Rated (12.9%)</option>
+            <option value="13.25" selected>Above Standard (13.25%)</option>
+            <option value="14.35">Below Standard (14.35%)</option>
+          </select>
+        </div>
+        <div>
+          <label for="promoted">Promoted Listings (%)</label>
+          <input type="number" id="promoted" value="0" step="0.1">
+        </div>
+        <div>
+          <label for="storeFee">Store Subscription Fee ($)</label>
+          <input type="number" id="storeFee" value="0" step="0.01">
+        </div>
+        <button type="submit">Calculate</button>
+      </form>
+
+      <div id="results">
+        <h3>Results</h3>
+        <p><strong>Total Fees:</strong> $<span id="fees">0.00</span></p>
+        <p><strong>Profit:</strong> $<span id="profit">0.00</span></p>
+        <p><strong>Profit Margin:</strong> <span id="margin">0</span>%</p>
+      </div>
+
+      <div id="chartContainer">
+        <canvas id="profitChart"></canvas>
+      </div>
+    </section>
+
+    <div class="article-box">
+      <h2>Why Use an eBay Calculator?</h2>
+      <p>Selling on eBay can be rewarding, but fees often make it hard to know your true profit. Between eBay final value fees, PayPal charges, and shipping costs, your earnings can shrink quickly. That’s where an <strong>eBay fee calculator</strong> becomes essential.</p>
+      <ul>
+        <li>Instantly estimate your eBay and PayPal fees</li>
+        <li>See how shipping costs affect your profit</li>
+        <li>Plan smarter pricing strategies</li>
+      </ul>
+      <h2>How eBayCalculator.site Helps Sellers</h2>
+      <p>At <strong>eBayCalculator.site</strong>, we make it simple. Enter your sale price, shipping, and store type, and our calculator shows your fees and net profit instantly. The built-in pie chart gives you a clear visual breakdown, making selling decisions faster and easier.</p>
+      <p>Whether you’re a casual seller or running a full eBay business, our <em>final value fee calculator</em> helps you stay ahead. Try it now and take the guesswork out of eBay selling!</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 eBayCalculator.site - All Rights Reserved.</p>
+    <p>
+      <a href="index.html">Home</a> | 
+      <a href="about.html">About</a> | 
+      <a href="privacy.html">Privacy Policy</a> | 
+      <a href="terms.html">Terms & Conditions</a> | 
+      <a href="contact.html">Contact</a>
+    </p>
+  </footer>
+
+  <script>
+    const ctx = document.getElementById('profitChart').getContext('2d');
+    let profitChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Item Cost', 'Shipping', 'Fees', 'Profit'],
+        datasets: [{
+          data: [0,0,0,0],
+          backgroundColor: ['#ef4444','#f59e0b','#3b82f6','#10b981'],
+        }]
+      },
+      options: { responsive:true, maintainAspectRatio:false }
+    });
+
+    document.getElementById('calcForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      let salePrice = parseFloat(document.getElementById('salePrice').value);
+      let cost = parseFloat(document.getElementById('cost').value);
+      let shipping = parseFloat(document.getElementById('shipping').value);
+      let feePercent = parseFloat(document.getElementById('sellerLevel').value);
+      let promotedPercent = parseFloat(document.getElementById('promoted').value);
+      let storeFee = parseFloat(document.getElementById('storeFee').value);
+
+      let fees = (salePrice * feePercent / 100) + (salePrice * promotedPercent / 100) + storeFee;
+      fees = parseFloat(fees).toFixed(2);
+
+      let profit = (salePrice - cost - shipping - fees).toFixed(2);
+      let margin = ((profit / salePrice) * 100).toFixed(1);
+
+      document.getElementById('fees').textContent = fees;
+      document.getElementById('profit').textContent = profit;
+      document.getElementById('margin').textContent = margin;
+
+      profitChart.data.datasets[0].data = [cost, shipping, fees, profit];
+      profitChart.update();
+    });
+  </script>
+</body>
+</html>
