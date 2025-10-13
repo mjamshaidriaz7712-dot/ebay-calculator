@@ -183,14 +183,31 @@
   <button onclick="acceptCookies()" style="margin-left:10px;background:#2563eb;color:#fff;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;">Accept</button>
 </div>
 <script>
-  function acceptCookies(){
-    document.getElementById('cookie-banner').style.display='none';
-    localStorage.setItem('cookiesAccepted','true');
+  function acceptCookies() {
+    /* Hide banner */
+    document.getElementById('cookie-banner').style.display = 'none';
+    localStorage.setItem('cookiesAccepted', 'true');
+
+    /* ✅ Update consent for Google once user accepts */
+    gtag('consent', 'update', {
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted',
+      'analytics_storage': 'granted'
+    });
   }
-  if(localStorage.getItem('cookiesAccepted')) {
-    document.getElementById('cookie-banner').style.display='none';
+
+  /* ✅ Auto-enable consent for returning visitors who already accepted */
+  if (localStorage.getItem('cookiesAccepted')) {
+    gtag('consent', 'update', {
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted',
+      'analytics_storage': 'granted'
+    });
   }
 </script>
+
 
 </body>
 </html>
