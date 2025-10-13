@@ -155,5 +155,19 @@
       profitChart.update();
     });
   </script>
+  <div id="cookie-banner" style="position:fixed;bottom:0;left:0;right:0;background:#1e293b;color:#fff;padding:15px;text-align:center;font-size:14px;z-index:9999;">
+  This site uses cookies to improve your experience. By using this site, you agree to our <a href="privacy.html" style="color:#93c5fd;">Privacy Policy</a>.
+  <button onclick="acceptCookies()" style="margin-left:10px;background:#2563eb;color:#fff;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;">Accept</button>
+</div>
+<script>
+  function acceptCookies(){
+    document.getElementById('cookie-banner').style.display='none';
+    localStorage.setItem('cookiesAccepted','true');
+  }
+  if(localStorage.getItem('cookiesAccepted')) {
+    document.getElementById('cookie-banner').style.display='none';
+  }
+</script>
+
 </body>
 </html>
