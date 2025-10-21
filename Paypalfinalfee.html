@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eBay + PayPal Fee Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+    input, select { padding: 5px; margin: 5px 0; width: 100%; max-width: 300px; }
+    label { display: block; margin-top: 15px; }
+    .result { background: #f4f4f4; padding: 10px; margin-top: 20px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+
+  <h1>eBay + PayPal Fee Calculator</h1>
+  <p>Calculate your net profit after eBay’s final value fees and PayPal processing fees.</p>
+
+  <label>
+    Item sale price (in USD):
+    <input type="number" id="salePrice" placeholder="e.g. 100.00" step="0.01" value="0">
+  </label>
+
+  <label>
+    Shipping charged to buyer (in USD):
+    <input type="number" id="shipping" placeholder="e.g. 10.00" step="0.01" value="0">
+  </label>
+
+  <label>
+    Sales tax / other applicable fees collected from buyer (in USD):
+    <input type="number" id="tax" placeholder="e.g. 0.00" step="0.01" value="0">
+  </label>
+
+  <label>
+    PayPal processing rate (percentage):
+    <input type="number" id="ppRate" placeholder="e.g. 2.99" step="0.01" value="2.99"> %
+  </label>
+
+  <label>
+    PayPal fixed fee per transaction (in USD):
+    <input type="number" id="ppFixed" placeholder="e.g. 0.30" step="0.01" value="0.30">
+  </label>
+
+  <label>
+    eBay final value fee rate (percentage):
+    <input type="number" id="ebayRate" placeholder="e.g. 13.25" step="0.01" value="13.25"> %
+  </label>
+
+  <label>
+    eBay fixed fee per order (in USD):
+    <input type="number" id="ebayFixed" placeholder="e.g. 0.30" step="0.01" value="0.30">
+  </label>
+
+  <button onclick="calculateFees()">Calculate</button>
+
+  <div class="result" id="output">
+    <!-- Results will show here -->
+  </div>
+
+<script>
+function calculateFees() {
+  const salePrice = parseFloat(document.getElementById('salePrice').value) || 0;
+  const shipping = parseFloat(document.getElementById('shipping').value) || 0;
+  const tax = parseFloat(document.getElementById('tax').value) || 0;
+
+  const ppRate = parseFloat(document.getElementById('ppRate').value) / 100;
+  const ppFixed = parseFloat(document.getElementById('ppFixed').value) || 0;
+
+  const ebayRate = parseFloat(document.getElementById('ebayRate').value) / 100;
+  const ebayFixed = parseFloat(document.getElementById('ebayFixed').value) || 0;
+
+  // Total amount of sale according to eBay: item + shipping + tax
+  const totalSaleAmount = salePrice + shipping + tax;
+
+  // eBay fee
+  const ebayFee = (totalSaleAmount * ebayRate) + ebayFixed;
+
+  // PayPal fee (on the gross amount received, assume same totalSaleAmount)
+  const ppFee = (totalSaleAmount * ppRate) + ppFixed;
+
+  // Net you receive
+  const netBeforePayOut = totalSaleAmount - ebayFee - ppFee;
+
+  const outputDiv = document.getElementById('output');
+  outputDiv.innerHTML = `
+    <p><strong>Total Sale Amount:</strong> \$${totalSaleAmount.toFixed(2)}</p>
+    <p><strong>eBay Fee:</strong> \$${ebayFee.toFixed(2)} (Rate: ${(ebayRate*100).toFixed(2)}% + Fixed: \$${ebayFixed.toFixed(2)})</p>
+    <p><strong>PayPal Fee:</strong> \$${ppFee.toFixed(2)} (Rate: ${(ppRate*100).toFixed(2)}% + Fixed: \$${ppFixed.toFixed(2)})</p>
+    <hr />
+    <p><strong>Net Amount You Receive:</strong> \$${netBeforePayOut.toFixed(2)}</p>
+  `;
+}
+</script>
+
+</body>
+</html>
