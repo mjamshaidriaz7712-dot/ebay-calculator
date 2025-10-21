@@ -35,147 +35,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-
-
-<!-- Header with top promo + PayPal link, responsive nav -->
-<header>
-  <!-- Top bar: PayPal link + shipping promo -->
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="left">
-        <!-- PayPal icon/button linking to https://ebaycalculator.site/ as requested -->
-        <a class="paypal-link" href="https://ebaycalculator.site/" target="_blank" rel="noopener noreferrer" aria-label="PayPal / Support">
-          <!-- lightweight inline PayPal SVG icon -->
-          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path fill="currentColor" d="M2 7h3l1-4h6c2.2 0 4 1.8 3.3 4.1L14 7h3c2.2 0 4 1.8 3.3 4.1L19 17c-.7 2.2-2.8 4-5.1 4H6l-4-14z"/>
-          </svg>
-          <span class="paypal-text">PayPal</span>
-        </a>
-      </div>
-
-      <div class="right">
-        <!-- Shipping promo text linking to the shipping policy -->
-        <a class="promo" href="https://silverghar.com/policies/shipping-policy" target="_blank" rel="noopener noreferrer">
-          Get Free Shipping on orders over Rs2500. Buy More Save More with SILVER GHAR
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main header / navigation -->
-  <div class="main-header">
-    <div class="container">
-      <a class="brand" href="index.html" aria-label="Home">
-        <img src="logo.png" alt="Site Logo" />
-        <span class="brand-name">eBay Calculator</span>
-      </a>
-
-      <nav class="nav" aria-label="Primary">
-        <ul class="nav-list">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#calculator">Calculator</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms &amp; Conditions</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="https://silverghar.com/policies/shipping-policy" target="_blank" rel="noopener noreferrer">Shipping Policy</a></li>
-        </ul>
-      </nav>
-
-      <!-- Right side actions -->
-      <div class="actions">
-        <!-- CTA: PayPal (links to the provided site) -->
-        <a class="btn btn-paypal" href="https://ebaycalculator.site/" target="_blank" rel="noopener noreferrer">PayPal</a>
-        <!-- Mobile menu toggle -->
-        <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
-          <span class="hamburger"></span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile menu (hidden on desktop) -->
-    <div id="mobileMenu" class="mobile-menu" hidden>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#calculator">Calculator</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="terms.html">Terms &amp; Conditions</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="https://silverghar.com/policies/shipping-policy" target="_blank" rel="noopener noreferrer">Shipping Policy</a></li>
-        <li><a class="mobile-paypal" href="https://ebaycalculator.site/" target="_blank" rel="noopener noreferrer">PayPal</a></li>
-      </ul>
-    </div>
-  </div>
-</header>
-
-<!-- Minimal CSS + small JS to toggle mobile menu: paste into <head> (CSS) and before </body> (JS) or inline as shown -->
-<style>
-  /* Basic reset for header */
-  header { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:#111; }
-  a { color: inherit; text-decoration: none; }
-  .topbar { background:#0f172a; color:#fff; font-size:14px; }
-  .topbar-inner { max-width:1200px; margin:0 auto; padding:6px 16px; display:flex; justify-content:space-between; align-items:center; }
-  .topbar .paypal-link { display:inline-flex; align-items:center; gap:8px; color:#fff; font-weight:600; }
-  .topbar .paypal-link svg { display:block; color:#ffd600; }
-  .topbar .promo { color:#cbd5e1; font-weight:600; }
-  .main-header { background:#fff; border-bottom:1px solid #e6eef6; }
-  .container { max-width:1200px; margin:0 auto; padding:14px 16px; display:flex; align-items:center; gap:16px; }
-  .brand { display:flex; align-items:center; gap:12px; }
-  .brand img { height:44px; width:auto; display:block; }
-  .brand-name { font-weight:800; font-size:1.05rem; color:#0f172a; }
-  .nav { margin-left:24px; flex:1; }
-  .nav-list { list-style:none; display:flex; gap:18px; margin:0; padding:0; align-items:center; }
-  .nav-list a { padding:8px 6px; color:#0f172a; font-weight:600; border-radius:6px; }
-  .nav-list a:hover { background:#f1f7ff; color:#0b5ed7; }
-  .actions { display:flex; align-items:center; gap:10px; }
-  .btn { display:inline-block; padding:8px 12px; border-radius:8px; font-weight:700; }
-  .btn-paypal { background:#ffc439; color:#111; border:1px solid rgba(0,0,0,0.06); }
-  .menu-toggle { display:none; background:none; border:0; padding:8px; cursor:pointer; }
-  .menu-toggle .hamburger { display:block; width:22px; height:2px; background:#0f172a; position:relative; }
-  .menu-toggle .hamburger::before, .menu-toggle .hamburger::after { content:''; position:absolute; left:0; width:22px; height:2px; background:#0f172a; }
-  .menu-toggle .hamburger::before { top:-6px; }
-  .menu-toggle .hamburger::after { top:6px; }
-
-  /* Mobile */
-  @media (max-width: 860px) {
-    .nav { display:none; }
-    .menu-toggle { display:inline-flex; }
-    .btn-paypal { display:none; }
-    .mobile-menu { background:#fff; border-top:1px solid #e6eef6; }
-    .mobile-menu ul { list-style:none; margin:0; padding:12px 16px; display:flex; flex-direction:column; gap:8px; }
-    .mobile-menu a { padding:10px 12px; border-radius:8px; display:block; color:#0f172a; font-weight:700; }
-    .mobile-menu a:hover { background:#f1f7ff; }
-  }
-</style>
-
-<script>
-  // Mobile menu toggle
-  (function(){
-    const btn = document.getElementById('menuToggle');
-    const menu = document.getElementById('mobileMenu');
-    btn && btn.addEventListener('click', function(){
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      if(menu){
-        if(menu.hidden){
-          menu.hidden = false;
-        } else {
-          menu.hidden = true;
-        }
-      }
-    });
-    // Close mobile menu on outside click (optional)
-    document.addEventListener('click', function(e){
-      if(!menu || !btn) return;
-      if(!menu.contains(e.target) && !btn.contains(e.target) && window.innerWidth <= 860){
-        menu.hidden = true;
-        btn.setAttribute('aria-expanded','false');
-      }
-    });
-  })();
-</script>
-
+    body { font-family: 'Inter', sans-serif; background: #f4f7fb; margin: 0; padding: 0; color:#333; display:flex; flex-direction:column; min-height:100vh;}
+    header { background: linear-gradient(135deg,#0f172a,#1e293b); color: #fff; text-align: center; padding: 20px; display:flex; align-items:center; justify-content:center; gap:15px;}
+    header img { height:60px; width:auto; border-radius:50%; }
+    header h1 { margin:0; font-size:1.8rem; font-weight:700; }
+    header p { margin-top:5px; opacity:0.9; font-size:0.9rem; }
+    main { flex:1; padding: 30px 20px; max-width: 1000px; margin: auto; }
+    #calculator { background:#fff; padding:30px; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+    #calculator h2 { font-size:1.5rem; margin-bottom:20px; text-align:center; }
+    form { display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
+    label { font-weight:600; font-size:0.9rem;}
+    input, select { padding:10px; border-radius:8px; border:1px solid #ccc; width:100%; }
+    button { grid-column: span 2; padding:15px; background:linear-gradient(135deg,#2563eb,#1e40af); border:none; border-radius:12px; color:#fff; font-size:1rem; font-weight:600; cursor:pointer; transition:0.3s; }
+    button:hover { background:linear-gradient(135deg,#1d4ed8,#1e3a8a); }
+    #results { margin-top:30px; text-align:center; }
+    #results h3 { margin-bottom:15px; }
+    #chartContainer { margin-top:20px; display:flex; justify-content:center; }
+    canvas { max-width:280px !important; height:auto !important; }
+    .article-box { background:#f9fafb; border-left:5px solid #2563eb; padding:20px; border-radius:8px; margin-top:30px; }
+    .article-box h2 { margin-top:0; color:#1e293b; }
+    ul { margin:10px 0; padding-left:20px; }
+    footer { background:#1e293b; color:#fff; text-align:center; padding:20px; margin-top:30px; }
+    footer a { color:#93c5fd; margin:0 10px; text-decoration:none; font-weight:600; }
+    footer a:hover { text-decoration:underline; }
   </style>
 </head>
 <body>
